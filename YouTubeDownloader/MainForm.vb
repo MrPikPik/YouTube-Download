@@ -436,6 +436,7 @@ Public Class MainForm
     End Sub
 
     Sub UpdateApplication()
+        Log("[Update] Starting update...")
         Dim client As Net.WebClient = New Net.WebClient()
         Dim xml As String
         Try
@@ -445,7 +446,7 @@ Public Class MainForm
             xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/master/CurrentVersion")
 #End If
         Catch
-            MsgBox("Updating failed.")
+            Log("[Update] Update failed! - Could not fetch current version.")
             Return
         End Try
 
@@ -457,18 +458,24 @@ Public Class MainForm
                 If Not Application.ProductVersion.StartsWith(version) Then
                     'Current version is old version, attempt to download latest from github
                     Try
+                        Log("[Update] Downloading https://github.com/MrPikPik/YouTube-Download/releases/download/" & version & "/YouTube_Downloader_" & version & ".zip...")
                         client.DownloadFile("https://github.com/MrPikPik/YouTube-Download/releases/download/" & version & "/YouTube_Downloader_" & version & ".zip", "tmp/YouTube_Downloader_" & version & ".zip")
                     Catch
+                        Log("[Update] Update failed! - Couldn't download latest release")
                         MsgBox("Couldn't download latest release")
                     End Try
 
-                    IO.Compression.ZipFile.ExtractToDirectory("tmp/YouTube_Downloader_" & version & ".zip", "")
-                    IO.File.Move("YouTubeDownloader.exe", "YouTubeDownloader " & version & ".exe")
-
-                    MsgBox("Update successfull!")
+                    Try
+                        Log("[Update] Decompressing archive...")
+                        IO.Compression.ZipFile.ExtractToDirectory("tmp/YouTube_Downloader_" & version & ".zip", "")
+                        IO.File.Move("YouTubeDownloader.exe", "YouTubeDownloader " & version & ".exe")
+                    Catch
+                        Log("[Update] Update failed! - Could not extract archive. Try and manually extract the archive found in the 'tmp' folder")
+                    End Try
+                    Log("[Update] Updated successfully to verion " & version)
 
                 Else
-                    MsgBox("Application already up to date!")
+                    Log("[Update] Update cancelled - Current version already up to date.")
                 End If
             End If
         Next
