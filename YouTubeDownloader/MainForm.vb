@@ -442,6 +442,7 @@ Public Class MainForm
         Try
 #If DEBUG Then
             xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/beta/CurrentVersion")
+            IO.File.WriteAllText("tmp/current", xml)
 #Else
             xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/master/CurrentVersion")
 #End If
@@ -462,15 +463,17 @@ Public Class MainForm
                         client.DownloadFile("https://github.com/MrPikPik/YouTube-Download/releases/download/" & version & "/YouTube_Downloader_" & version & ".zip", "tmp/YouTube_Downloader_" & version & ".zip")
                     Catch
                         Log("[Update] Update failed! - Couldn't download latest release")
-                        MsgBox("Couldn't download latest release")
+                        MsgBox("Couldn't download latest release", MsgBoxStyle.Critical, "Error")
+                        Return
                     End Try
 
                     Try
                         Log("[Update] Decompressing archive...")
-                        IO.Compression.ZipFile.ExtractToDirectory("tmp/YouTube_Downloader_" & version & ".zip", "")
-                        IO.File.Move("YouTubeDownloader.exe", "YouTubeDownloader " & version & ".exe")
-                    Catch
+                        IO.Compression.ZipFile.ExtractToDirectory("tmp/YouTube_Downloader_" & version & ".zip", "tmp")
+                        IO.File.Move("tmp/YouTubeDownloader.exe", "YouTubeDownloader " & version & ".exe")
+                    Catch ex As Exception
                         Log("[Update] Update failed! - Could not extract archive. Try and manually extract the archive found in the 'tmp' folder")
+                        Return
                     End Try
                     Log("[Update] Updated successfully to verion " & version)
 
@@ -505,7 +508,7 @@ Public Class MainForm
         If serial = Nothing Then
             MsgBox("The provided product code is invalid." & vbNewLine & "The application will now close.")
             Application.Exit()
-        ElseIf serial = "urmomgay" Or serial = "faggot" Or serial = "bigghey" Then
+        ElseIf serial = "serial" Then
             'Huehuehue
         Else
             MsgBox("The provided product code is invalid." & vbNewLine & "The application will now close.")
@@ -528,7 +531,7 @@ Public Class MainForm
             For Each file As String In IO.Directory.GetFiles(Application.StartupPath & "\tmp")
                 IO.File.Delete(file)
             Next
-            IO.Directory.Delete(Application.StartupPath & "\tmp")
+            IO.Directory.Delete(Application.StartupPath & "\tmp", True)
         End If
     End Sub
 
