@@ -30,6 +30,7 @@ Partial Class MainForm
         Me.StatusStripLabel = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.FileToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.UpdateYoutubedlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.QuitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.QueueToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -51,7 +52,7 @@ Partial Class MainForm
         Me.CopySelectedToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ClearToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.SplitContainer1 = New System.Windows.Forms.SplitContainer()
-        Me.UpdateYoutubedlToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CheckForUpdatesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.linkBoxContextMenu.SuspendLayout()
@@ -103,10 +104,16 @@ Partial Class MainForm
         '
         'FileToolStripMenuItem
         '
-        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.UpdateYoutubedlToolStripMenuItem, Me.QuitToolStripMenuItem})
+        Me.FileToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CheckForUpdatesToolStripMenuItem, Me.UpdateYoutubedlToolStripMenuItem, Me.QuitToolStripMenuItem})
         Me.FileToolStripMenuItem.Name = "FileToolStripMenuItem"
         Me.FileToolStripMenuItem.Size = New System.Drawing.Size(37, 20)
         Me.FileToolStripMenuItem.Text = "&File"
+        '
+        'UpdateYoutubedlToolStripMenuItem
+        '
+        Me.UpdateYoutubedlToolStripMenuItem.Name = "UpdateYoutubedlToolStripMenuItem"
+        Me.UpdateYoutubedlToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.UpdateYoutubedlToolStripMenuItem.Text = "&Update youtube-dl"
         '
         'QuitToolStripMenuItem
         '
@@ -124,13 +131,13 @@ Partial Class MainForm
         'ClearToolStripMenuItem
         '
         Me.ClearToolStripMenuItem.Name = "ClearToolStripMenuItem"
-        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ClearToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
         Me.ClearToolStripMenuItem.Text = "&Clear"
         '
         'DownloadToolStripMenuItem
         '
         Me.DownloadToolStripMenuItem.Name = "DownloadToolStripMenuItem"
-        Me.DownloadToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.DownloadToolStripMenuItem.Size = New System.Drawing.Size(128, 22)
         Me.DownloadToolStripMenuItem.Text = "&Download"
         '
         'InfoToolStripMenuItem
@@ -278,11 +285,11 @@ Partial Class MainForm
         Me.SplitContainer1.SplitterDistance = 202
         Me.SplitContainer1.TabIndex = 9
         '
-        'UpdateYoutubedlToolStripMenuItem
+        'CheckForUpdatesToolStripMenuItem
         '
-        Me.UpdateYoutubedlToolStripMenuItem.Name = "UpdateYoutubedlToolStripMenuItem"
-        Me.UpdateYoutubedlToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
-        Me.UpdateYoutubedlToolStripMenuItem.Text = "&Update youtube-dl"
+        Me.CheckForUpdatesToolStripMenuItem.Name = "CheckForUpdatesToolStripMenuItem"
+        Me.CheckForUpdatesToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.CheckForUpdatesToolStripMenuItem.Text = "&Check For Updates"
         '
         'MainForm
         '
@@ -346,4 +353,5 @@ Partial Class MainForm
     Friend WithEvents CopySelectedToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ClearToolStripMenuItem1 As ToolStripMenuItem
     Friend WithEvents UpdateYoutubedlToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CheckForUpdatesToolStripMenuItem As ToolStripMenuItem
 End Class

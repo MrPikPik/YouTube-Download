@@ -157,6 +157,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CurrentVersion.xml" />
     <Content Include="ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

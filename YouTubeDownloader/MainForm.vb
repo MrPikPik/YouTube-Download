@@ -435,6 +435,22 @@ Public Class MainForm
         End Using
     End Sub
 
+    Sub UpdateApplication()
+        Dim client As Net.WebClient = New Net.WebClient()
+        Try
+#If DEBUG Then
+            Dim xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/beta/CurrentVersion.xml")
+#Else
+            Dim xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/master/CurrentVersion.xml")
+#End If
+
+            MsgBox(xml)
+        Catch
+            MsgBox("File does not exist");
+        End Try
+    End Sub
+
+
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 #If CHECK_FOR_DEPENENCIES Then
         'Check for required files
@@ -511,6 +527,11 @@ Public Class MainForm
     Private Sub UpdateYoutubedlToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles UpdateYoutubedlToolStripMenuItem.Click
         UpdateYouTubeDL()
     End Sub
+
+    Private Sub CheckForUpdatesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CheckForUpdatesToolStripMenuItem.Click
+        UpdateApplication()
+    End Sub
+
 #End Region
 
 #Region """Context Menu Linkbox"""
