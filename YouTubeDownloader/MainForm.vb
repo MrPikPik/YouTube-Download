@@ -437,17 +437,23 @@ Public Class MainForm
 
     Sub UpdateApplication()
         Dim client As Net.WebClient = New Net.WebClient()
+        Dim xml As String
         Try
 #If DEBUG Then
-            Dim xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/beta/CurrentVersion.xml")
+            Xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/beta/CurrentVersion")
 #Else
-            Dim xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/master/CurrentVersion.xml")
+            xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/master/CurrentVersion")
 #End If
-
-            MsgBox(xml)
-        Catch
-            MsgBox("File does not exist");
+        Catch ex As Exception
+            MsgBox("Updating failed.")
+            Return
         End Try
+
+        Dim lines As String() = xml.Split(vbNewLine)
+
+        For Each line As String In lines
+            MsgBox(line)
+        Next
     End Sub
 
 
