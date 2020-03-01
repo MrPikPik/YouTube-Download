@@ -440,19 +440,37 @@ Public Class MainForm
         Dim xml As String
         Try
 #If DEBUG Then
-            Xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/beta/CurrentVersion")
+            xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/beta/CurrentVersion")
 #Else
             xml = client.DownloadString("https://raw.githubusercontent.com/MrPikPik/YouTube-Download/master/CurrentVersion")
 #End If
-        Catch ex As Exception
+        Catch
             MsgBox("Updating failed.")
             Return
         End Try
 
-        Dim lines As String() = xml.Split(vbNewLine)
 
+        Dim lines As String() = xml.Split(vbLf)
         For Each line As String In lines
-            MsgBox(line)
+            If line.StartsWith("version") Then
+                Dim version As String = line.Split("=")(1)
+                If Not Application.ProductVersion.StartsWith(version) Then
+                    'Current version is old version, attempt to download latest from github
+                    Try
+                        client.DownloadFile("https://github.com/MrPikPik/YouTube-Download/releases/download/" & version & "/YouTube_Downloader_" & version & ".zip", "tmp/YouTube_Downloader_" & version & ".zip")
+                    Catch
+                        MsgBox("Couldn't download latest release")
+                    End Try
+
+                    IO.Compression.ZipFile.ExtractToDirectory("tmp/YouTube_Downloader_" & version & ".zip", "")
+                    IO.File.Move("YouTubeDownloader.exe", "YouTubeDownloader " & version & ".exe")
+
+                    MsgBox("Update successfull!")
+
+                Else
+                    MsgBox("Application already up to date!")
+                End If
+            End If
         Next
     End Sub
 
